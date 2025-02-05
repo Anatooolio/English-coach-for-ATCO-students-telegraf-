@@ -44,7 +44,7 @@
 		},
 		{
 			"id": 5,
-			"text": "JThe communication between the air traffic controller and Japanair 415 was conducted within 5 minutes.",
+			"text": "The communication between the air traffic controller and Japanair 415 was conducted within 5 minutes.",
 			"hasOptions": true,
 			"options": [
 				{ "id": 1, "text": "TRUE", "isCorrect": false },
