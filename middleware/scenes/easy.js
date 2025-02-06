@@ -1,18 +1,31 @@
-const { Markup, Composer, Scenes } = require('telegraf')
-const startStep = new Composer()
-startStep.on('text', async ctx => {
+const { Telegraf, Scenes, session, Markup } = require('telegraf')
+const { BaseScene, Stage } = Scenes
+const os = require('os')
+const questions = require('../../materials/questions/decisions.json')
+
+const easyScene = new BaseScene('easyLevel')
+easyScene.enter(async ctx => {
 	try {
-		ctx.wizard.state.data = {}
-		ctx.wizard.state.data.userName = ctx.message.from.username
-		ctx.wizard.state.data.firstName = ctx.message.from.first_name
-		ctx.wizard.state.data.lastName = ctx.message.from.last_name
-		await ctx.reply('Ура!')
+		await ctx.replyWithHTML(
+			`Отлично&#128077;!${os.EOL}Ты выбрал <i>лёгкую</i> сложность. ${os.EOL}Прослушай аудио ниже и ответь на мои вопросы.${os.EOL}Отвечать можно только TRUE, FALSE, NOT STATED ${os.EOL}Дальше наш с тобой диалог будет на английском	&#128515;`, 
+			Markup.keyboard([['Stop']]).resize()
+		)
+		await ctx.replyWithAudio(
+			{
+				source: questions['easy'].url,
+			},
+			Markup.inlineKeyboard([
+				Markup.button.callback("I'M READY TO ANSWER QUESTIONS", 'ready'),
+			]),
+		)
 	} catch (error) {
 		await ctx.reply('Произошла ошибка! Попробуй перезагрузить меня...')
 		console.log(`ERROR: ${error}`)
 	}
 })
-
-const easyScene = new Scenes.WizardScene('easyWizard', startStep)
+easyScene.action('ready', ctx => {
+	ctx.scene.enter('easyQuestions'),
+    ctx.answerCbQuery()
+})
 
 module.exports = easyScene
