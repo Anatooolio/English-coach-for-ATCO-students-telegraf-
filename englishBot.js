@@ -4,6 +4,7 @@ const { BaseScene, Stage } = Scenes
 const { message } = require('telegraf/filters')
 const os = require('os')
 const welcomeScene = require('./middleware/scenes/welcome')
+const audioScene = require('./middleware/scenes/audio')
 const easyScene = require('./middleware/scenes/easy')
 const mediumScene = require('./middleware/scenes/medium')
 const hardScene = require('./middleware/scenes/hard')
@@ -13,6 +14,7 @@ const hardQuestionsScene = require('./middleware/scenes/hardQuestions')
 
 const stage = new Stage([
 	welcomeScene,
+	audioScene,
 	easyScene,
 	mediumScene,
 	hardScene,
@@ -27,7 +29,6 @@ bot.use(Telegraf.log())
 bot.use(session())
 bot.use(stage.middleware())
 
-bot.hears('pp', async ctx => await ctx.scene.enter('welcome'))
 
 bot.start(ctx => ctx.scene.enter('welcome'))
 bot.help(ctx =>
