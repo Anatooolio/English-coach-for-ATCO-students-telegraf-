@@ -27,5 +27,6 @@ easyScene.action('ready', ctx => {
 	ctx.scene.enter('easyQuestions'),
     ctx.answerCbQuery()
 })
+easyScene.hears('Stop', async ctx => await ctx.scene.enter('welcome'))
 
 module.exports = easyScene

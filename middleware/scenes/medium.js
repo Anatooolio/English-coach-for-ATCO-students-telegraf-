@@ -7,7 +7,8 @@ const mediumScene = new BaseScene('mediumLevel')
 mediumScene.enter(async ctx => {
 	try {
 		await ctx.replyWithHTML(
-			`Отлично&#128077;!${os.EOL}Ты выбрал <i>среднюю</i> сложность. ${os.EOL}Прослушай аудио ниже и ответь на мои вопросы.${os.EOL}Отвечать можно только TRUE, FALSE, NOT STATED ${os.EOL}Дальше наш с тобой диалог будет на английском	&#128515;`
+			`Отлично&#128077;!${os.EOL}Ты выбрал <i>среднюю</i> сложность. ${os.EOL}Прослушай аудио ниже и ответь на мои вопросы.${os.EOL}Отвечать можно только TRUE, FALSE, NOT STATED ${os.EOL}Дальше наш с тобой диалог будет на английском	&#128515;`,
+			Markup.keyboard([['Stop']]).resize()
 		)
 		await ctx.replyWithAudio(
 			{
@@ -23,5 +24,6 @@ mediumScene.enter(async ctx => {
 	}
 })
 mediumScene.action('ready', ctx => ctx.scene.enter('mediumQuestions'))
+mediumScene.hears('Stop', async ctx => await ctx.scene.enter('welcome'))
 
 module.exports = mediumScene

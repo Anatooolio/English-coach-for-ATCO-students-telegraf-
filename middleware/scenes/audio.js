@@ -14,12 +14,14 @@ audioScene.enter(async ctx => {
 &#10103; Прослушай радиообмен;
 &#10104; Ответь на вопросы (<i>К каждому аудиофайлу прилагаются несколько утверждений, задачей будет ответить являются ли они правдивыми, ложными, или вовсе не относящимся к содержанию радиообмена</i>).`,
 
-			Markup.inlineKeyboard([
-				Object.keys(questions).map(level =>
-					Markup.button.callback(level.toUpperCase(), level)
-				),
-				[Markup.button.callback('Oh no, not now!', 'waiting')],
-			])
+			Markup.inlineKeyboard(
+				[
+					Object.keys(questions).map(level =>
+						Markup.button.callback(level.toUpperCase(), level)
+					),
+					[Markup.button.callback('Oh no, not now!', 'waiting')],
+				],
+			)
 		)
 	} catch (error) {
 		await ctx.reply(
