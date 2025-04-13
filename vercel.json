@@ -1,6 +1,10 @@
 {
 	"routes": [
 		{
+			"src": "/",
+            "dest": "englishBot.js"
+		},
+		{
 			"src": "/telegraf",
 			"dest": "englishBot.js"
 		}
