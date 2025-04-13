@@ -4,10 +4,12 @@
   "main": "index.js",
   "scripts": {
     "start": "node --watch englishBot.js",
-    "dev": "nodemon englishBot.js"
+    "dev": "nodemon englishBot.js",
+    "dev-with-tunnel": "npm run tunnel & npm run dev",
+    "tunnel": "cloudflared tunnel --url http://localhost:3000"
   },
   "keywords": [],
-  "author": "",
+  "author": "Anatoly Margach",
   "license": "ISC",
   "type": "commonjs",
   "description": "",
@@ -17,6 +19,8 @@
     "nodemon": "^3.1.9",
     "openai": "^4.83.0",
     "random-js": "^2.1.0",
+    "telebot": "^1.4.1",
+    "telebot-vercel": "^0.0.4",
     "telegraf": "^4.16.3"
   }
 }
