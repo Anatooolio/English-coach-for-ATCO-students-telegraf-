@@ -2,6 +2,7 @@ require('dotenv').config()
 const { Telegraf, Markup, session, Scenes } = require('telegraf')
 const { BaseScene, Stage } = Scenes
 const { message } = require('telegraf/filters')
+const express = require('express')
 const os = require('os')
 const welcomeScene = require('./middleware/scenes/welcome')
 const audioScene = require('./middleware/scenes/audio')
@@ -24,6 +25,17 @@ const stage = new Stage([
 ])
 
 const bot = new Telegraf(process.env.BOT_TOKEN)
+const app = express()
+// Установка Webhook
+const webhookPath = '/telegraf'
+bot.telegram.setWebhook(`${process.env.VERCEL_URL}${webhookPath}`)
+// Express-обработчики
+app.use(bot.webhookCallback(webhookPath));
+app.get('/', (req, res) => res.send('Bot is running!'));
+const PORT = process.env.PORT || 3001
+app.listen(PORT, () => {
+	console.log(`Server is running on port ${PORT}`)
+})
 
 bot.use(Telegraf.log())
 bot.use(session())
@@ -58,5 +70,3 @@ bot.launch()
 // Enable graceful stop
 process.once('SIGINT', () => bot.stop('SIGINT'))
 process.once('SIGTERM', () => bot.stop('SIGTERM'))
-
-export default bot
