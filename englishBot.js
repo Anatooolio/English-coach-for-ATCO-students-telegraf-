@@ -23,7 +23,7 @@ const stage = new Stage([
 	mediumQuestionsScene,
 	hardQuestionsScene,
 ])
-
+//
 const bot = new Telegraf(process.env.BOT_TOKEN)
 const app = express()
 // Установка Webhook
