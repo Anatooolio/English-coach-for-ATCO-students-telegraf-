@@ -33,6 +33,10 @@ bot.telegram.setWebhook(`${process.env.VERCEL_URL}${webhookPath}`)
 app.use(bot.webhookCallback(webhookPath));
 app.get('/', (req, res) => res.send('Bot is running!'));
 const PORT = process.env.PORT || 3001
+app.post('/telegraf', (req, res) => {
+	console.log('Webhook received:', req.body)
+	res.sendStatus(200)
+})
 app.listen(PORT, () => {
 	console.log(`Server is running on port ${PORT}`)
 })
