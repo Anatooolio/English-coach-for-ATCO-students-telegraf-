@@ -12,6 +12,21 @@ const hardScene = require('./middleware/scenes/hard')
 const easyQuestionsScene = require('./middleware/scenes/easyQuestions')
 const mediumQuestionsScene = require('./middleware/scenes/mediumQuestions')
 const hardQuestionsScene = require('./middleware/scenes/hardQuestions')
+
+
+const stage = new Stage([
+	welcomeScene,
+	audioScene,
+	easyScene,
+	mediumScene,
+	hardScene,
+	easyQuestionsScene,
+	mediumQuestionsScene,
+	hardQuestionsScene,
+])
+
+const bot = new Telegraf(process.env.BOT_TOKEN)
+
 //Сервер
 const app = express()
 // Установка Webhook
@@ -33,19 +48,6 @@ app.post('/telegraf', (req, res) => {
 app.listen(PORT, () => {
 	console.log(`Server is running on port ${PORT}`)
 })
-
-const stage = new Stage([
-	welcomeScene,
-	audioScene,
-	easyScene,
-	mediumScene,
-	hardScene,
-	easyQuestionsScene,
-	mediumQuestionsScene,
-	hardQuestionsScene,
-])
-
-const bot = new Telegraf(process.env.BOT_TOKEN)
 
 bot.use(Telegraf.log())
 bot.use(session())
