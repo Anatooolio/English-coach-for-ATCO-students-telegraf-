@@ -12,6 +12,27 @@ const hardScene = require('./middleware/scenes/hard')
 const easyQuestionsScene = require('./middleware/scenes/easyQuestions')
 const mediumQuestionsScene = require('./middleware/scenes/mediumQuestions')
 const hardQuestionsScene = require('./middleware/scenes/hardQuestions')
+//Сервер
+const app = express()
+// Установка Webhook
+const PORT = 3000
+const webhookPath = '/telegraf'
+bot.telegram.setWebhook(`${process.env.VERCEL_URL}${webhookPath}`)
+// Express-обработчики
+app.use(bot.webhookCallback(webhookPath))
+//логирование
+app.use((req, res, next) => {
+	console.log(`Request received: ${req.method} ${req.url}`)
+	next()
+})
+app.get('/', (req, res) => res.send('Bot is running!'))
+app.post('/telegraf', (req, res) => {
+	console.log('Webhook received:', req.body)
+	res.sendStatus(200)
+})
+app.listen(PORT, () => {
+	console.log(`Server is running on port ${PORT}`)
+})
 
 const stage = new Stage([
 	welcomeScene,
@@ -25,26 +46,6 @@ const stage = new Stage([
 ])
 
 const bot = new Telegraf(process.env.BOT_TOKEN)
-const app = express()
-// Установка Webhook
-const webhookPath = '/telegraf'
-bot.telegram.setWebhook(`${process.env.VERCEL_URL}${webhookPath}`)
-// Express-обработчики
-app.use(bot.webhookCallback(webhookPath));
-//логирование
-app.use((req, res, next) => {
-	console.log(`Request received: ${req.method} ${req.url}`)
-	next()
-})
-app.get('/', (req, res) => res.send('Bot is running!'));
-const PORT = process.env.PORT || 3001
-app.post('/telegraf', (req, res) => {
-	console.log('Webhook received:', req.body)
-	res.sendStatus(200)
-})
-app.listen(PORT, () => {
-	console.log(`Server is running on port ${PORT}`)
-})
 
 bot.use(Telegraf.log())
 bot.use(session())
