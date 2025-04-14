@@ -43,8 +43,9 @@ app.use((req, res, next) => {
 app.get('/', (req, res) => res.send('Bot is running!'))
 app.post('/telegraf', (req, res) => {
 	console.log('Webhook received:', req.body)
-	res.sendStatus(200)
+	res.sendStatus(200) // Успешный ответ Telegram
 })
+
 app.listen(PORT, () => {
 	console.log(`Server is running on port ${PORT}`)
 })
