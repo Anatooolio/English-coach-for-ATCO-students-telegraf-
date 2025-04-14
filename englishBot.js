@@ -34,7 +34,6 @@ const PORT = 3000
 const webhookPath = '/telegraf'
 bot.telegram.setWebhook(`${process.env.VERCEL_URL}${webhookPath}`)
 // Express-обработчики
-app.use(bot.webhookCallback(webhookPath))
 //логирование
 app.use((req, res, next) => {
 	console.log(`Request received: ${req.method} ${req.url}`)
@@ -45,6 +44,7 @@ app.post('/telegraf', (req, res) => {
 	console.log('Webhook received:', req.body)
 	res.sendStatus(200) // Успешный ответ Telegram
 })
+app.use(bot.webhookCallback(webhookPath))
 
 app.listen(PORT, () => {
 	console.log(`Server is running on port ${PORT}`)
