@@ -40,8 +40,14 @@ app.use((req, res, next) => {
 	next()
 })
 app.get('/', (req, res) => res.send('Bot is running!'))
-app.post('/telegraf', bot.webhookCallback('/telegraf'))
-app.use(bot.webhookCallback('/telegraf'))
+// app.post('/telegraf', bot.webhookCallback('/telegraf'))
+// app.use(bot.webhookCallback('/telegraf'))
+app.post('/telegraf', (req, res) => {
+	console.log(`Webhook received:`, req.body)
+	bot.handleUpdate(req.body) // Явный вызов обработки обновлений бота
+	res.sendStatus(200) // Ответ Telegram
+})
+
 
 
 app.listen(PORT, () => {
