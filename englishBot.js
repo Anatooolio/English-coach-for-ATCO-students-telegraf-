@@ -2,7 +2,6 @@ require('dotenv').config()
 const { Telegraf, Markup, session, Scenes } = require('telegraf')
 const { BaseScene, Stage } = Scenes
 const { message } = require('telegraf/filters')
-const express = require('express')
 const os = require('os')
 const welcomeScene = require('./middleware/scenes/welcome')
 const audioScene = require('./middleware/scenes/audio')
@@ -27,32 +26,6 @@ const stage = new Stage([
 
 const bot = new Telegraf(process.env.BOT_TOKEN)
 
-//Сервер
-const app = express()
-// Установка Webhook
-const PORT = 3000
-const webhookPath = '/telegraf'
-bot.telegram.setWebhook(`${process.env.VERCEL_URL}${webhookPath}`)
-// Express-обработчики
-//логирование
-app.use((req, res, next) => {
-	console.log(`Request received: ${req.method} ${req.url}`)
-	next()
-})
-app.get('/', (req, res) => res.send('Bot is running!'))
-// app.post('/telegraf', bot.webhookCallback('/telegraf'))
-// app.use(bot.webhookCallback('/telegraf'))
-app.post('/telegraf', (req, res) => {
-	console.log(`Webhook received:`, req.body)
-	bot.handleUpdate(req.body) // Явный вызов обработки обновлений бота
-	res.sendStatus(200) // Ответ Telegram
-})
-
-
-
-app.listen(PORT, () => {
-	console.log(`Server is running on port ${PORT}`)
-})
 
 bot.use(Telegraf.log())
 bot.use(session())
