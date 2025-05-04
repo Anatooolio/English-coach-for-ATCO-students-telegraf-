@@ -1,5 +1,6 @@
 require('dotenv').config()
 const { Telegraf, Markup, session, Scenes } = require('telegraf')
+const express = require('express')
 const { BaseScene, Stage } = Scenes
 const { message } = require('telegraf/filters')
 const os = require('os')
@@ -25,7 +26,9 @@ const stage = new Stage([
 ])
 
 const bot = new Telegraf(process.env.BOT_TOKEN)
+const app = express()
 
+app.use(bot.webhookCallback('/telegram'))
 
 bot.use(Telegraf.log())
 bot.use(session())
@@ -56,6 +59,10 @@ bot.action('waiting', async ctx => {
 
 bot.hears('hi', ctx => ctx.reply('Hey there'))
 bot.launch()
+
+app.listen(3000, () => {
+	console.log('Сервер запущен на порту 3000')
+})
 
 // Enable graceful stop
 process.once('SIGINT', () => bot.stop('SIGINT'))

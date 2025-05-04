@@ -1,12 +1,5 @@
 {
-	"routes": [
-		{
-			"src": "/",
-            "dest": "englishBot.js"
-		},
-		{
-			"src": "/telegraf",
-			"dest": "englishBot.js"
-		}
-	]
+	"version": 2,
+	"builds": [{ "src": "englishBot.js", "use": "@vercel/node" }],
+	"routes": [{ "src": "/(.*)", "dest": "englishBot.js" }]
 }
