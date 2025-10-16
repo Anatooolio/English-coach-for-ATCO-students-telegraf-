@@ -1,7 +1,10 @@
 'use strict'
-const { Model } = require('sequelize')
 
-module.exports = (sequelize, DataTypes) => {
+// ИЗМЕНЕНИЕ 1: Импортируем Model и DataTypes вместе
+const { Model, DataTypes } = require('sequelize')
+
+// ИЗМЕНЕНИЕ 2: Удаляем DataTypes из аргументов функции
+module.exports = sequelize => {
 	class UserShortTrack extends Model {
 		static associate(models) {
 			UserShortTrack.belongsTo(models.User, { foreignKey: 'userId' })
@@ -11,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
 
 	UserShortTrack.init(
 		{
+			// DataTypes теперь доступен из импорта выше
 			userId: {
 				type: DataTypes.BIGINT,
 				allowNull: false,

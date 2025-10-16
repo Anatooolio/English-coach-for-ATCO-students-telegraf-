@@ -1,15 +1,13 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
-  class UserLongTrack extends Model {
-    static associate(models) {
-      UserLongTrack.belongsTo(models.User, { foreignKey: 'userId' })
+'use strict'
+const { Model, DataTypes } = require('sequelize')
+module.exports = sequelize => {
+	class UserLongTrack extends Model {
+		static associate(models) {
+			UserLongTrack.belongsTo(models.User, { foreignKey: 'userId' })
 			UserLongTrack.belongsTo(models.longTrack, { foreignKey: 'trackId' })
-    }
-  }
-  UserLongTrack.init(
+		}
+	}
+	UserLongTrack.init(
 		{
 			userId: DataTypes.BIGINT,
 			trackId: DataTypes.INTEGER,
@@ -28,5 +26,5 @@ module.exports = (sequelize, DataTypes) => {
 			],
 		}
 	)
-  return UserLongTrack;
-};
+	return UserLongTrack
+}

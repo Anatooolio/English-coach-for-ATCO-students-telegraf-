@@ -1,7 +1,7 @@
 'use strict'
-const { Model } = require('sequelize')
+const { Model, DataTypes } = require('sequelize')
 
-module.exports = (sequelize, DataTypes) => {
+module.exports = sequelize => {
 	class Track extends Model {
 		static associate(models) {
 			Track.hasMany(models.UserShortTrack, { foreignKey: 'trackId' })

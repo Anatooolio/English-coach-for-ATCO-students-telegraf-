@@ -1,6 +1,6 @@
 'use strict'
-const { Model, STRING } = require('sequelize')
-module.exports = (sequelize, DataTypes) => {
+const { Model, DataTypes } = require('sequelize')
+module.exports = sequelize => {
 	class IcaoGrammarQuestion extends Model {
 		/**
 		 * Helper method for defining associations.
@@ -11,7 +11,6 @@ module.exports = (sequelize, DataTypes) => {
 			IcaoGrammarQuestion.hasMany(models.UserGrammarAnswer, {
 				foreignKey: 'questionId',
 			})
-			
 		}
 	}
 	IcaoGrammarQuestion.init(

@@ -1,14 +1,12 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
-  class longTrack extends Model {
-    static associate(models) {
-      longTrack.hasMany(models.UserLongTrack, { foreignKey: 'trackId' })
-    }
-  }
-  longTrack.init(
+'use strict'
+const { Model, DataTypes } = require('sequelize')
+module.exports = sequelize => {
+	class longTrack extends Model {
+		static associate(models) {
+			longTrack.hasMany(models.UserLongTrack, { foreignKey: 'trackId' })
+		}
+	}
+	longTrack.init(
 		{
 			title: DataTypes.STRING,
 			script: DataTypes.STRING,
@@ -22,5 +20,5 @@ module.exports = (sequelize, DataTypes) => {
 			tableName: 'longTracks',
 		}
 	)
-  return longTrack;
-};
+	return longTrack
+}
