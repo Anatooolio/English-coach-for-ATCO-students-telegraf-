@@ -7,7 +7,7 @@ const { BaseScene } = Scenes
 const getBotStats = require('../config/getBotStats')
 
 const adminScene = new BaseScene('admin')
-
+// проверка
 const ADMIN_ID = Number(process.env.ADMIN_ID)
 
 const isAdmin = ctx => ctx.from.id === ADMIN_ID
